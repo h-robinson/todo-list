@@ -8,7 +8,7 @@ export default function Header(props) {
 				<h1>Todo</h1>
 			</div>
 			<div className="header-links">
-				<Link id='todo-link' to="/">Todo List</Link>
+				<Link id='todo-link' to="/todo-list">Todo List</Link>
 				<Link id='about-link' to="/about">About</Link>
 			</div>
 		</div>	
