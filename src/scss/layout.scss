@@ -1,0 +1,46 @@
+@import 'variables';
+
+@media(max-width:600px) { // smaller displays
+  .app-container { margin: 0; }
+}
+
+@media(min-width:600px) { // larger displays
+  body {
+    background-image: radial-gradient(farthest-corner at 50% 100%, white, #2ae);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  .app-container {
+    max-width: 600px;
+    margin: 2px auto;
+  }
+}
+
+body { min-height: 100vh; }
+
+.app-container  {
+  min-height: 100vh;
+  background-color: white;
+}
+
+/* header*/
+.header {
+  display: flex;
+  .heading, .header-links { flex: 1; }
+  align-items: center;
+  margin: 0px;
+  padding: 10px;
+  color: #333;
+  background-color: $base-color;
+  background-image: radial-gradient(farthest-corner at 58% 100%, $base-color-lightest, $base-color);
+  .header-links {
+    text-align: right;
+  }
+  h1 {
+    padding-left: 0.5em;
+  }
+  box-shadow: 0px 2px 2px $shadow-color-light;
+  h1, h2 {
+    text-shadow: 1px 1px $shadow-color-light;
+  }
+}

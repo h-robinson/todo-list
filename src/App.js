@@ -8,7 +8,7 @@ import SearchTodos from './components/todo_components/SearchTodos';
 import Todos from './components/todo_components/Todos';
 import About from './pages/About';
 
-import './App.css';
+import './css/App.css';
 
     const todos = [
       // {
@@ -81,14 +81,14 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <Header links={{toggleLinks: this.toggleLinks}} />
-          <div className="container todo-app-container">
             <Route exact path="/"
+          <div className="container app-container">
               render={
                 (props) => (
                   <React.Fragment>
-                    <div className="todo-header">
                       <AddTodo addTodo={this.addTodo}/>
                       <SearchTodos />
+                    <div className="todo-list-header">
                     </div>
                     <Todos
                       todos={this.state.todos}

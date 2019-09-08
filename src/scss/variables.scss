@@ -1,0 +1,13 @@
+$font-stack: 'Fira Sans Condensed', sans-serif;
+
+$base-color: #eedc00;// #2ae;
+// $base-color: #ffed00;
+$base-color-dark: darken($base-color, 5%);;
+$base-color-darker: darken($base-color, 15%);;
+$base-color-darkest: darken($base-color, 40%);;
+$base-color-light: lighten($base-color, 5%);;
+$base-color-lighter: lighten($base-color, 15%);;
+$base-color-lightest: lighten($base-color, 40%);;
+
+$shadow-color-light: #999;
+$shadow-color-dark: #666;

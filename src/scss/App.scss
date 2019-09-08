@@ -1,0 +1,82 @@
+@import 'variables';
+@import 'layout';
+
+/*generic*/
+body * {
+  margin: 0;
+  padding: 0;  
+
+}
+
+button, input[submit] {
+  border: none;
+  height: 100%;
+  background-color: transparent;
+  padding: 0.5em;
+}
+
+ul {
+  list-style: none;
+}
+
+.todo-list-header {
+  display: flex;
+  .todo-header-form {
+    flex: 1;
+    flex-basis: 50%;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid $base-color;
+    border-bottom: 1px solid $base-color;
+    height: 1.5em;
+    &:nth-child(1) {
+      border-right: 1px solid $base-color;
+    }
+    .todo-header-form-input {
+      flex: 10;
+      padding: 0px 0.25em;
+      input { 
+        padding-left: 0.25em;
+        border: none;
+        width: 100%;
+        line-height: 2em;
+      }
+    }
+    .todo-header-form-button {
+      flex: 1;
+      text-align: right;
+      padding-right: 5px;
+      background-color: $base-color-lighter;
+    }
+  }
+}
+
+.todo-item {
+  display: flex;
+  padding: 5px 5px;
+  border-bottom: 1px solid $base-color-light;
+  .todo-item-title {
+    flex: 10;
+  }
+  .todo-item-controls {
+    text-align: right;
+    flex: 1;
+  }
+  input {
+    margin: 5px 10px; 
+  }
+  &:nth-child(odd) {
+    background-color: $base-color-lightest;
+  }
+}
+
+.matched-todos {
+  border-bottom: 1px solid $base-color-light;
+  font-style: italic;
+  font-size: 0.9em;
+  color: $base-color-dark;
+  li {
+    padding: 0.25em 0.5em;
+  }
+}
+
