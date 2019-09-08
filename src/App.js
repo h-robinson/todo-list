@@ -10,66 +10,92 @@ import About from './pages/About';
 
 import './css/App.css';
 
-    const todos = [
-      // {
-      //   user_id: '1',
-      //   id: '1',
-      //   title: 'Get a haircut',
-      //   priority: 1,
-      //   completed: false
-      // },
-      // {
-      //   user_id: '1',
-      //   id: '2',
-      //   title: 'Get a real job',
-      //   priority: 1,
-      //   completed: false
-      // },
-      // {
-      //   user_id: '1',
-      //   id: '3',
-      //   title: 'Get retarded',
-      //   priority: 0,
-      //   completed: true
-      // }
-    ]
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {todos: todos};
+    // state init
+    this.state = {
+      todos: [],
+      newTodo: {
+        title: '',
+        priority: '',
+        notes: '',
+        status: '',
+        completed_at: '',
+        date: '',
+        date_operator: ''
+      },
+      searchString: '',
+      searchMatches: []
+    };
+    // event bindings
     this.markComplete = this.markComplete.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.uri = "https://jsonplaceholder.typicode.com";
+    // resource addresses
+    this.uri = "https://hrob-api.herokuapp.com";
+    this.filterUri = "https://hrob-api.herokuapp.com/filter_todos";
   }
 
-
   componentDidMount() {
-    axios.get(this.uri.concat("/todos?_limit=19")).then((res) => 
-      this.setState({todos: res.data})
-    );
+    axios.get(this.uri.concat("/todos"))
+      .then((res) => 
+        this.setState({todos: res.data})
+      )
+      .catch(res => console.log(res));
   }
 
   deleteTodo(id) {
-    axios.delete(`${this.uri}/todos/${id}`).then((res) => 
-      this.setState({todos: [...this.state.todos.filter((todo) => todo.id !== id)]}))
+    axios.delete(`${this.uri}/todos/${id}`)
+      .then((res) => 
+        this.setState({todos: [...this.state.todos.filter((todo) => todo.id !== id)]}))
+      .catch(res => console.log(res));
   }
 
   markComplete(id) {
-    this.setState({
-      todos: this.state.todos.map((todo) => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed;
-        }
-        return todo;
-      })
-    });
+    axios.put(`${this.uri}/todos/${id}`, { status: 'on_hold'})
+      .then((res) => 
+        this.setState({
+          todos: this.state.todos.map((todo) => {
+            if (todo.id === id) {
+              todo.completed = !todo.completed;
+            }
+            return todo;
+          })
+        })
+      )
+    .catch(res => console.log(res));
   };
 
   addTodo(title) {
+  onSubmit(e) {
+    e.preventDefault();
+    if (e.target.value === '') {
+      console.log('Empty input!');
+      // TODO: highlight error
+      return;
+    }
+    switch(e.target.name) {
+      case 'new-todo-form':
+        this.addTodo();
+        this.setState({ newTodo: { title: '' } });
+        break;
+      case 'search-form':
+        this.searchTodos();
+        this.setState({ searchString: '' });
+        break;
+      default:
+        break;
+    }
+  }
+
+  addTodo() {
+    const { title, priority } =  this.state.newTodo;
     axios.post(this.uri.concat("/todos"), {
       title,
+      priority,
       completed: false
     }).then((res) => {
       this.setState({todos: [...this.state.todos, res.data]})
@@ -81,14 +107,17 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <Header links={{toggleLinks: this.toggleLinks}} />
-            <Route exact path="/"
           <div className="container app-container">
+            <Route exact path="/todo-list"
               render={
                 (props) => (
                   <React.Fragment>
-                      <AddTodo addTodo={this.addTodo}/>
-                      <SearchTodos />
                     <div className="todo-list-header">
+                      <AddTodo
+                        newTodo={this.state.newTodo}
+                        onChange={this.onChange}
+                        onSubmit={this.onSubmit}
+                      />
                     </div>
                     <Todos
                       todos={this.state.todos}

@@ -15,6 +15,10 @@ class Todo extends Component {
 		this.props.markComplete(this.props.todo.id);
 	}
 
+	prioritySymbol(priority) {
+		return priority && (parseInt(priority) > 1 ? 'exclamation' : '');
+	}
+
 	getStyle = (completed) => {
 		return {
 			textDecoration: this.props.todo.completed ?
@@ -24,12 +28,13 @@ class Todo extends Component {
 	}
 
 	render() {
-		const { id, title, completed } = this.props.todo;
+		const { title, priority, completed } = this.props.todo;
 		return (
 			<div className="todo-item" style={this.getStyle(completed)}>
 				<div className="todo-item-title">
 					<input type="checkbox" onChange={this.handleChange} />
-					{ title }
+					{ title } { ' ' }
+					<i className={"fas fa-".concat(this.prioritySymbol(priority)) }></i>
 				</div>
 				<div className="todo-item-controls">
 					<button className="far fa-trash-alt" onClick={this.handleClick}></button>
